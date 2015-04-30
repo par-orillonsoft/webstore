@@ -108,9 +108,18 @@
 
 	<div class="row-fluid">
 		<div class="submitblock" >
-			<?php echo CHtml::submitButton('Submit', array('id'=>'btnSubmit'));  ?>
+			<?=
+				CHtml::submitButton(
+					Yii::t(
+						'forms',
+						'Submit'
+					),
+					array(
+						'id' => 'btnSubmit'
+					)
+				);
+			?>
 		</div>
-
 	</div>
 
 	<?php $this->endWidget(); ?>

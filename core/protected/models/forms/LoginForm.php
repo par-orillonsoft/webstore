@@ -50,7 +50,7 @@ class LoginForm extends CFormModel
 		return array(
 			'email' => Yii::t('CheckoutForm', 'Email Address'),
 			'password' => Yii::t('CheckoutForm', 'Password'),
-			'rememberMe' => 'Remember me next time',
+			'rememberMe' => Yii::t('CheckoutForm', 'Remember me next time'),
 		);
 	}
 

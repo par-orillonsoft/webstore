@@ -22,25 +22,36 @@ $form = $this->beginWidget(
 	<div class="address-form">
 		<?php $this->renderPartial($partial, array('model' => $model, 'form' => $form, 'error' => $error)); ?>
 		<footer class="submit submit-small">
-			<?php
-			echo CHtml::submitButton(
-				'Submit',
-				array(
-					'type' => 'submit',
-					'class' => 'button',
-					'value' => Yii::t('checkout', "Save and Continue"),
-				)
-			);
-			echo '<p>' .
+			<?=
+				CHtml::submitButton(
+					Yii::t(
+						'forms',
+						'Submit'
+					),
+					array(
+						'type' => 'submit',
+						'class' => 'button',
+						'value' => Yii::t(
+							'checkout',
+							'Save and Continue'
+						),
+					)
+				) .
+			'<p>' .
 				CHtml::link(
-					Yii::t('checkout', 'Cancel &amp; Pick from Existing Addresses'),
+					Yii::t(
+						'checkout',
+						'Cancel &amp; Pick from Existing Addresses'
+					),
 					$this->createUrl($cancel),
-					array('class' => 'alternate')
-				).'</p>';
+					array(
+						'class' => 'alternate'
+					)
+				) .
+			'</p>';
 			?>
 		</footer>
 	</div>
-
 </div>
 
 <?php $this->endWidget();?>

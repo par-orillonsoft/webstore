@@ -163,7 +163,8 @@
 </ol>
 <ol class="field-containers-small">
 	<li class="field-container">
-		<?php echo $form->labelEx(
+		<?php
+		echo $form->labelEx(
 			$model,
 			'contactPhone',
 			$htmlOptions = array('class' => 'placeheld'),

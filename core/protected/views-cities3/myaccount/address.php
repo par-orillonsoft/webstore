@@ -117,7 +117,15 @@
 	</div>
 
 	<div class="span9 submitblock" >
-		<?php echo CHtml::submitButton('Submit', array('id'=>'btnSubmit'));  ?>
+		<?=
+			CHtml::submitButton(
+				Yii::t(
+					'forms',
+					'Submit'
+				),
+				array('id' => 'btnSubmit')
+			);
+		?>
 	</div>
 
 	<?php $this->endWidget(); ?>

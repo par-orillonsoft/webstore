@@ -135,6 +135,11 @@ $(document).on(clickevent, function(e) {
 
 $(document).on('click', ".webstore-modal-close, .continue-shopping", function()  {
     hideModal();
+
+    if ($('.editcartmodal').first().hasClass('show') === true)
+    {
+        History.back();
+    }
 });
 
 $(document).on('click', ".webstore-change-item", function()  {

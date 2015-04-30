@@ -29,10 +29,15 @@ class MyaccountController extends Controller
 		$model = Customer::GetCurrent();
 
 		$this->breadcrumbs = array(
-			Yii::t('global','My Account')=>$this->createUrl("/myaccount"),
+			Yii::t('global', 'My Account') => $this->createUrl("/myaccount"),
 		);
 
-		$this->render('index',array('model'=>$model));
+		$this->render(
+			'index',
+			array(
+				'model' => $model
+			)
+		);
 
 	}
 
@@ -105,7 +110,14 @@ class MyaccountController extends Controller
 					//Put plain text passwords back for form refresh
 					$model->password = $strPassword;
 					$model->password_repeat = $strPassword;
-					Yii::log("Error creating new user ".print_r($model->getErrors(), true), 'error', 'application.'.__CLASS__.".".__FUNCTION__);
+					Yii::log(
+						'Error creating new user ' . print_r(
+							$model->getErrors(),
+							true
+						),
+						'error',
+						'application.' . __CLASS__ . '.' . __FUNCTION__
+					);
 				}
 				else
 				{
@@ -143,7 +155,7 @@ class MyaccountController extends Controller
 
 		if (!isset($_GET['id']) || !isset($_GET['token']))
 		{
-			throw new CHttpException(404, 'Please make sure you have all the required information from password reset email.');
+			_xls_404('Please make sure you have all the required information from password reset email.');
 		}
 		else
 		{
@@ -153,11 +165,23 @@ class MyaccountController extends Controller
 
 		if (!Yii::app()->user->isGuest)
 		{
-			$link = CHtml::link(Yii::t("customer", "logout"),
-				$this->createUrl("site/logout"));
-			Yii::app()->user->setFlash("info",
-				Yii::t("customer", "Please {logout} to reset a password.",
-					array("{logout}"=>$link)));
+			$link = CHtml::link(
+				Yii::t(
+					'customer',
+					'logout'
+				),
+				$this->createUrl('site/logout')
+			);
+			Yii::app()->user->setFlash(
+				'info',
+				Yii::t(
+					'customer',
+					'Please {logout} to reset a password.',
+					array(
+						'{logout}' => $link
+					)
+				)
+			);
 			$this->redirect($this->createUrl('/myaccount'));
 		}
 
@@ -165,8 +189,13 @@ class MyaccountController extends Controller
 
 		if (!$model)
 		{
-			Yii::app()->user->setFlash("error",
-				Yii::t("customer", "Could not find the specified customer.  Please request another password reset."));
+			Yii::app()->user->setFlash(
+				'error',
+				Yii::t(
+					'customer',
+					'Could not find the specified customer.  Please request another password reset.'
+				)
+			);
 			$this->redirect($this->createUrl('site/login'));
 		}
 
@@ -179,25 +208,46 @@ class MyaccountController extends Controller
 
 			if ($model->save())
 			{
-				Yii::app()->user->setFlash("success",
-					Yii::t("customer", "Password updated, please login!"));
+				Yii::app()->user->setFlash(
+					'success',
+					Yii::t(
+						'customer',
+						'Password updated, please login!'
+					)
+				);
 				$this->redirect($this->createUrl('site/login'));
 			}
 
 			if ($model->hasErrors('token'))
 			{
-				Yii::app()->user->setFlash('error',
-					Yii::t('customer','Could not authorize password reset. Please request a new reset e-mail by clicking "Forgot Password" link.'));
+				Yii::app()->user->setFlash(
+					'error',
+					Yii::t(
+						'customer',
+						'Could not authorize password reset. Please request a new reset e-mail by clicking "Forgot Password" link.'
+					)
+				);
 				$this->redirect($this->createUrl('site/login'));
 			}
 
-			Yii::app()->user->setFlash("error",
-				Yii::t("customer", "Could not reset password, please try again."));
+			Yii::app()->user->setFlash(
+				'error',
+				Yii::t(
+					'customer',
+					'Could not reset password, please try again.'
+				)
+			);
 		}
 
 		$this->breadcrumbs = array(
-			Yii::t('global','My Account')=>$this->createUrl("/myaccount"),
-			Yii::t('global','Edit Account')=>$this->createUrl("myaccount/resetpassword")
+			Yii::t(
+				'global',
+				'My Account'
+			) => $this->createUrl('/myaccount'),
+			Yii::t(
+				'global',
+				'Edit Account'
+			) => $this->createUrl('myaccount/resetpassword')
 		);
 
 		// TODO - this is to accommodate deprecated themes with password fields
@@ -211,8 +261,8 @@ class MyaccountController extends Controller
 			$this->redirect($this->createUrl("/myaccount"));
 
 		$this->breadcrumbs = array(
-			Yii::t('global','My Account')=>$this->createUrl("/myaccount"),
-			Yii::t('global','Add an address')=>$this->createUrl("myaccount/address"),
+			Yii::t('global', 'My Account') => $this->createUrl("/myaccount"),
+			Yii::t('global', 'Add an address') => $this->createUrl("myaccount/address"),
 		);
 
 		$model = new CustomerAddress();
@@ -238,8 +288,8 @@ class MyaccountController extends Controller
 
 				if (!$model->save())
 				{
-					Yii::log("Error creating new customer address ".print_r($model->getErrors(),true),
-						'error', 'application.'.__CLASS__.".".__FUNCTION__);
+					Yii::log('Error creating new customer address ' . print_r($model->getErrors(), true),
+						'error', 'application.' . __CLASS__ . "." . __FUNCTION__);
 				}
 
 				if ($model->makeDefaultBilling)
@@ -261,7 +311,13 @@ class MyaccountController extends Controller
 				}
 				catch(Exception $e)
 				{
-					Yii::log("Error updating customer cart ".$e->getMessage(), 'error', 'application.'.__CLASS__.".".__FUNCTION__);
+					Yii::log(
+						'Error updating customer cart ' .
+						$e->getMessage(),
+						'error',
+						'application.' .
+						__CLASS__ . "." . __FUNCTION__
+					);
 				}
 
 				Yii::app()->shoppingcart->save();
@@ -293,11 +349,16 @@ class MyaccountController extends Controller
 	{
 		if (Yii::app()->params['MODERATE_REGISTRATION'] == 1)
 		{
-
-			$this->triggerEmailCampaign($model,'onAddCustomer');
-			Yii::app()->user->setFlash('success',
-				Yii::t('customer','Your account has been created but must be approved before you can log in. You will receive confirmation when you have been approved.'));
-			$this->triggerEmailCampaign($model,'onAddCustomer');
+			$this->triggerEmailCampaign($model, 'onAddCustomer');
+			Yii::app()->user->setFlash(
+				'success',
+				Yii::t(
+					'customer',
+					'Your account has been created but must be approved before you can log in.
+					 You will receive confirmation when you have been approved.'
+				)
+			);
+			$this->triggerEmailCampaign($model, 'onAddCustomer');
 			$this->redirect($this->createUrl("/site"));
 		}
 
@@ -308,44 +369,63 @@ class MyaccountController extends Controller
 		// validate user input and redirect to the previous page if valid
 		if ($loginModel->validate() && $loginModel->login())
 		{
-			Yii::app()->user->setFlash('success',
-				Yii::t('customer','Your account has been created and you have been logged in automatically.'));
+			Yii::app()->user->setFlash(
+				'success',
+				Yii::t(
+					'customer',
+					'Your account has been created and you have been logged in automatically.'
+				)
+			);
 		}
 		else
 		{
 			Yii::log(
 				"Error logging in our newly created user " . print_r($loginModel->getErrors(), true),
 				'error',
-				'application.'.__CLASS__.".".__FUNCTION__
+				'application.' . __CLASS__ . "." . __FUNCTION__
 			);
 
 			Yii::app()->user->setFlash(
 				'error',
-				Yii::t('customer','Your account has been created but we had an error logging you in.')
+				Yii::t(
+					'customer',
+					'Your account has been created but we had an error logging you in.'
+				)
 			);
 		}
 
-		$this->triggerEmailCampaign($model,'onAddCustomer');
+		$this->triggerEmailCampaign($model, 'onAddCustomer');
 
 		//Common SSL mode means we need to pass back to the original URL and log in again automatically
 		if (Yii::app()->isCommonSSL)
 		{
-			$strIdentity = Yii::app()->user->id.",".Yii::app()->shoppingcart->id.",site,index";
-			Yii::log("Log in ".$strIdentity, 'info', 'application.'.__CLASS__.".".__FUNCTION__);
+			$strIdentity = Yii::app()->user->id . "," . Yii::app()->shoppingcart->id . ",site,index";
+
+			Yii::log(
+				'Log in ' .
+				$strIdentity,
+				'info',
+				'application.' .
+				__CLASS__ . "." . __FUNCTION__
+			);
 			$redirString = _xls_encrypt($strIdentity);
 
-			$url = Yii::app()->controller->createAbsoluteUrl('commonssl/login', array('link'=>$redirString));
+			$url = Yii::app()->controller->createAbsoluteUrl(
+				'commonssl/login',
+				array(
+					'link' => $redirString
+				)
+			);
 
 			$url = str_replace(
-				"https://".Yii::app()->params['LIGHTSPEED_HOSTING_LIGHTSPEED_URL'],
-				"http://".Yii::app()->params['LIGHTSPEED_HOSTING_CUSTOM_URL'],
-				$url);
-
+				"https://" . Yii::app()->params['LIGHTSPEED_HOSTING_LIGHTSPEED_URL'],
+				"http://" . Yii::app()->params['LIGHTSPEED_HOSTING_CUSTOM_URL'],
+				$url
+			);
 		}
 		else
 		{
 			$url = $this->createUrl("/site");
-
 		}
 
 		//No matter what happens, we always go home.
@@ -373,10 +453,9 @@ class MyaccountController extends Controller
 		}
 	}
 
-	protected function triggerEmailCampaign($objCustomer,$strTrigger)
+	protected function triggerEmailCampaign($objCustomer, $strTrigger)
 	{
-		$objEvent = new CEventCustomer('MyAccountController',$strTrigger,$objCustomer);
-		_xls_raise_events('CEventCustomer',$objEvent);
+		$objEvent = new CEventCustomer('MyAccountController', $strTrigger, $objCustomer);
+		_xls_raise_events('CEventCustomer', $objEvent);
 	}
-
 }

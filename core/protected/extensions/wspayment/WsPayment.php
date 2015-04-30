@@ -141,5 +141,26 @@ class WsPayment extends WsExtension
 		return CLogger::LEVEL_INFO;
 	}
 
+	/**
+	 * We use this function to know if an advanced payment should be displayed.
+	 * It's related to the configuration key name: 'ALLOW_ADVANCED_PAY_METHODS'.
+	 * If the value of this key is set to 1, it means that we should display an
+	 * advance payment method.
+	 *
+	 * @return bool True if we can display the advance payment method. False
+	 * otherwise.
+	 */
+	public function canDisplayAdvancedPayment()
+	{
+		$allowAdvancedPayments = Yii::app()->params['ALLOW_ADVANCED_PAY_METHODS'];
+		if ($this->advancedMode === true &&
+			CPropertyValue::ensureInteger($allowAdvancedPayments) === 0)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 
 }

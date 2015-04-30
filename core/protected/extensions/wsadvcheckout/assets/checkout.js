@@ -883,7 +883,3 @@ $(document).on('click', function() {
 
 	Checkout.creatingTooltip = false;
 });
-
-$(document).on('click', '#cart .exit, #cart .continue', function() {
-	hideModal();
-});

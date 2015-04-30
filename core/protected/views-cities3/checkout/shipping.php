@@ -38,15 +38,21 @@ $this->renderPartial("_storepickup", array(
 		<?php $this->renderPartial('//site/_flashmessages'); ?>
 		<?php $this->renderPartial('_shippingaddress',array('model' => $model, 'form' => $form, 'error' => $error) ); ?>
 		<footer class="submit submit-small">
-			<?php
-				echo CHtml::submitButton(
-					'Submit',
-					array(
-						'type' => 'submit',
-						'class' => 'button',
-						'value' => Yii::t('checkout', "See Shipping Options"),
-					)
-				);
+			<?=
+				CHtml::submitButton(
+						Yii::t(
+							'forms',
+							'Submit'
+						),
+						array(
+							'type' => 'submit',
+							'class' => 'button',
+							'value' => Yii::t(
+								'checkout',
+								'See Shipping Options'
+							),
+						)
+					);
 			?>
 		</footer>
 	</div>

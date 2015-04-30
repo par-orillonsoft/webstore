@@ -123,18 +123,25 @@
 						</p>
 					</div>
 					<div class="choices">
-						<?php
-							echo CHtml::submitButton(
-								'Submit',
+						<?=
+							CHtml::submitButton(
+								Yii::t(
+									'forms',
+									'Submit'
+								),
 								array(
 									'type' => 'button',
 									'class' => 'button new_customer',
-									'value' => Yii::t('checkout', "I'm a new customer"),
+									'value' => Yii::t(
+										'checkout',
+										"I'm a new customer"),
 								)
-							);
-
-							echo CHtml::htmlButton(
-								Yii::t('checkout', "I've ordered before"),
+							) .
+							CHtml::htmlButton(
+								Yii::t(
+									'checkout',
+									"I've ordered before"
+								),
 								array(
 									'type' => 'button',
 									'class' => 'ordered_before',
@@ -143,15 +150,21 @@
 						?>
 					</div>
 					<div class="new_customer invisible">
-						<?php
-						echo CHtml::submitButton(
-							'Submit',
-							array(
-								'type' => 'button',
-								'class' => 'button',
-								'value' => Yii::t('cart', "Continue to Shipping"),
-							)
-						);
+						<?=
+							CHtml::submitButton(
+								Yii::t(
+									'forms',
+									'Submit'
+								),
+								array(
+									'type' => 'button',
+									'class' => 'button',
+									'value' => Yii::t(
+										'cart',
+										'Continue to Shipping'
+									),
+								)
+							);
 						?>
 						<p>
 							<?php
@@ -165,16 +178,21 @@
 						</p>
 					</div>
 					<div class="guest invisible">
-						<?php
-						echo CHtml::submitButton(
-							'Submit',
-							array(
-								'id' => 'guest-button',
-								'type' => 'button',
-								'class' => 'button',
-								'value' => Yii::t('checkout', "Guest Checkout"),
-							)
-						);
+						<?=
+							CHtml::submitButton(
+								Yii::t(
+									'forms',
+									'Submit'
+								),
+								array(
+									'id' => 'guest-button',
+									'type' => 'button',
+									'class' => 'button',
+									'value' => Yii::t(
+										'checkout',
+										'Guest Checkout'),
+								)
+							);
 						?>
 						<p>
 							<?php
